@@ -10,24 +10,24 @@ ProcessManager::ProcessManager()
 {
     updateData();
 }
-QList<Process> ProcessManager::getChildProcesses(QString parentPid)
-{
-     QList<Process> childrenProcessList;
-     QDir childrenDir("/proc/"+parentPid+"/task");
-     QStringList entries = childrenDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-     for (const QString& entry : entries) // для каждой дирректории /proc/<PID>
-     {
-         try{
-             Process process(childrenDir.path()+ "/"+entry);
-             childrenProcessList.append(process);
-         }catch(FileOpenError&)
-         {
-             continue;
-         }
-     }
-     return childrenProcessList;
-}
 
+QList<Process> ProcessManager::getChildeThreads(QString parentPid)
+{
+    QList<Process> childrenProcessList;
+    QDir childrenDir("/proc/"+parentPid+"/task");
+    QStringList entries = childrenDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const QString& entry : entries) // для каждой дирректории /proc/<PID>
+    {
+        try{
+            Process process(childrenDir.path()+ "/"+entry);
+            childrenProcessList.append(process);
+        }catch(FileOpenError&)
+        {
+            continue;
+        }
+    }
+    return childrenProcessList;
+}
 void ProcessManager:: updateData()
 {
     processList.clear();

@@ -12,7 +12,7 @@ public:
     ProcessManager(); // Конструктор с опциональным parent
     QList<Process> getProcessList(){return processList;}
     void updateData();
-    QList<Process> getChildProcesses(QString parentPid);
+    QList<Process> getChildeThreads(QString parentPid);
 private:
     QList<Process> processList;
 };
